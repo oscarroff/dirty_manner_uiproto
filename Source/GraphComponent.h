@@ -25,13 +25,12 @@ public:
             return;
         
         // Find min and max values for scaling
-        float minVal = data[0];
         float maxVal = data[0];
         for (int i = 0; i < dataSize; ++i)
         {
-            minVal = juce::jmin(minVal, data[i]);
             maxVal = juce::jmax(maxVal, data[i]);
         }
+        float minVal = 0.0f;
         
         // Prevent division by zero
         if (maxVal == minVal)
@@ -42,7 +41,7 @@ public:
         float height = (float)getHeight();
         
         // Y-axis label area width
-        int yAxisLabelWidth = 40;
+        int yAxisLabelWidth = 30;
         int topPadding = 10;
         int bottomPadding = 10;
         
@@ -87,7 +86,7 @@ public:
             float barPadding = barWidth * 0.1f; // 10% padding on each side
             float actualBarWidth = barWidth - (2 * barPadding);
             
-            g.setColour(juce::Colours::green);
+            g.setColour(juce::Colours::grey);
             
             for (int i = 0; i < dataSize; ++i)
             {

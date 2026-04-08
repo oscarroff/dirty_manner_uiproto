@@ -71,13 +71,19 @@ public:
         inputText.onTextChange = [this] { statusText.setText (inputText.getText().toUpperCase(), juce::dontSendNotification); };
         inputText.setJustificationType (juce::Justification::centred);
 
+        addAndMakeVisible (infoText);
+        infoText.setFont (juce::Font (12.0f));
+        infoText.setText ("PM2.5 air quality: 1 week at 1 hour intervals", juce::dontSendNotification);
+        infoText.setColour (juce::Label::textColourId, juce::Colours::lightgreen);
+        infoText.setJustificationType (juce::Justification::centred);
+
         addAndMakeVisible(graphComponent);
         
         // Example data - replace with your actual data
-        exampleData = { 0.1f, 0.3f, 0.25f, 0.5f, 0.7f, 0.6f, 0.8f, 0.4f, 0.9f, 0.2f };
+        exampleData = { 0.0f };
         graphComponent.setData(exampleData.data(), exampleData.size());
 
-        setSize (320, 200);
+        setSize (320, 280);
     }
 
     void paint (juce::Graphics& g) override
@@ -92,7 +98,14 @@ public:
         statusText.setBounds (110, 80, getWidth() - 220, 20);
 
         // Graph takes up the remaining space below
-        graphComponent.setBounds(10, 100, getWidth() - 20, getHeight() - 100);
+        graphComponent.setBounds(10, 95, getWidth() - 20, getHeight() - 120);
+        infoText   .setBounds (10,  getHeight() - 30, getWidth() - 20,  20);
+    }
+
+    // Public method to indicate bad input
+    void updateStatusText(const std::string status)
+    {
+        this->statusText.setText(status, juce::dontSendNotification);
     }
     // Public method to update graph data
     void updateGraphData(const std::vector<float>& newData)
@@ -106,6 +119,7 @@ private:
     juce::Label titleLabel;
     juce::Label inputText;
     juce::Label statusText;
+    juce::Label infoText;
     GraphComponent graphComponent;
     std::vector<float> exampleData;
 
