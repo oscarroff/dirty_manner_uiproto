@@ -12,10 +12,12 @@ juce_add_gui_app(dirty_manner_ui
     PRODUCT_NAME "dirty_manner_ui"
 )
 
+# Generate header filers
+juce_generate_juce_header(dirty_manner_ui)
+
 # Add your source files
 target_sources(dirty_manner_ui PRIVATE
     Source/Main.cpp
-    Source/DirtyMannerUI.h
 )
 
 # Link JUCE modules (from PIP metadata)

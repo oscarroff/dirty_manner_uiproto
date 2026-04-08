@@ -54,29 +54,32 @@ public:
     {
         addAndMakeVisible (titleLabel);
         titleLabel.setFont (juce::Font (16.0f, juce::Font::bold));
-        titleLabel.setText ("Click in the white box to enter some text...", juce::dontSendNotification);
+        titleLabel.setText ("input a date*", juce::dontSendNotification);
         titleLabel.setColour (juce::Label::textColourId, juce::Colours::lightgreen);
         titleLabel.setJustificationType (juce::Justification::centred);
 
-        addAndMakeVisible (inputLabel);
-        inputLabel.setText ("Text input:", juce::dontSendNotification);
-        inputLabel.attachToComponent (&inputText, true);
-        inputLabel.setColour (juce::Label::textColourId, juce::Colours::orange);
-        inputLabel.setJustificationType (juce::Justification::right);
+        // addAndMakeVisible (inputLabel);
+        // inputLabel.setText ("Date:", juce::dontSendNotification);
+        // inputLabel.attachToComponent (&inputText, true);
+        // inputLabel.setColour (juce::Label::textColourId, juce::Colours::orange);
+        // inputLabel.setJustificationType (juce::Justification::right);
 
-        addAndMakeVisible (uppercaseLabel);
-        uppercaseLabel.setText ("Uppercase:", juce::dontSendNotification);
-        uppercaseLabel.attachToComponent (&uppercaseText, true);
-        uppercaseLabel.setColour (juce::Label::textColourId, juce::Colours::orange);
-        uppercaseLabel.setJustificationType (juce::Justification::right);
+        // addAndMakeVisible (statusLabel);
+        // statusLabel.setText ("Status:", juce::dontSendNotification);
+        // statusLabel.attachToComponent (&statusText, true);
+        // statusLabel.setColour (juce::Label::textColourId, juce::Colours::orange);
+        // statusLabel.setJustificationType (juce::Justification::right);
 
-        addAndMakeVisible (uppercaseText);
-        uppercaseText.setColour (juce::Label::backgroundColourId, juce::Colours::darkblue);
+        addAndMakeVisible (statusText);
+        statusText.setColour (juce::Label::backgroundColourId, juce::Colours::black);
+        inputText.setJustificationType (juce::Justification::centred);
 
         addAndMakeVisible (inputText);
+        inputText.setText ("DD/MM/YYYY", juce::dontSendNotification);
         inputText.setEditable (true);
         inputText.setColour (juce::Label::backgroundColourId, juce::Colours::darkblue);
-        inputText.onTextChange = [this] { uppercaseText.setText (inputText.getText().toUpperCase(), juce::dontSendNotification); };
+        inputText.onTextChange = [this] { statusText.setText (inputText.getText().toUpperCase(), juce::dontSendNotification); };
+        inputText.setJustificationType (juce::Justification::centred);
 
         setSize (320, 200);
     }
@@ -89,17 +92,17 @@ public:
     void resized() override
     {
         titleLabel   .setBounds (10,  10, getWidth() - 20,  30);
-        inputText    .setBounds (100, 50, getWidth() - 110, 20);
-        uppercaseText.setBounds (100, 80, getWidth() - 110, 20);
+        inputText    .setBounds (110, 50, getWidth() - 220, 20);
+        statusText.setBounds (110, 80, getWidth() - 220, 20);
     }
 
 private:
     //==============================================================================
     juce::Label titleLabel;
-    juce::Label inputLabel;
+    // juce::Label inputLabel;
     juce::Label inputText;
-    juce::Label uppercaseLabel;
-    juce::Label uppercaseText;
+    juce::Label statusLabel;
+    juce::Label statusText;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
