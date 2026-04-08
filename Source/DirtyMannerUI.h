@@ -92,7 +92,7 @@ public:
         statusText.setBounds (110, 80, getWidth() - 220, 20);
 
         // Graph takes up the remaining space below
-        graphComponent.setBounds(10, 120, getWidth() - 20, getHeight() - 130);
+        graphComponent.setBounds(10, 100, getWidth() - 20, getHeight() - 100);
     }
     // Public method to update graph data
     void updateGraphData(const std::vector<float>& newData)

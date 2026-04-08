@@ -1,5 +1,7 @@
 #pragma once
 
+#include <JuceHeader.h>
+
 //==============================================================================
 class GraphComponent : public juce::Component
 {
@@ -18,10 +20,8 @@ public:
     {
         // Draw background
         g.fillAll(juce::Colours::black);
-        g.setColour(juce::Colours::darkgrey);
-        g.drawRect(getLocalBounds(), 1);
         
-        if (data == nullptr || dataSize <= 1)
+        if (data == nullptr || dataSize <= 0)
             return;
         
         // Find min and max values for scaling
@@ -40,39 +40,71 @@ public:
         float range = maxVal - minVal;
         float width = (float)getWidth();
         float height = (float)getHeight();
-        int padding = 10;
-        float graphWidth = width - 2 * padding;
-        float graphHeight = height - 2 * padding;
         
-        // Draw graph line
-        g.setColour(juce::Colours::green);
-        for (int i = 0; i < dataSize - 1; ++i)
-        {
-            float x1 = padding + (i / (float)(dataSize - 1)) * graphWidth;
-            float y1 = height - padding - ((data[i] - minVal) / range) * graphHeight;
-            
-            float x2 = padding + ((i + 1) / (float)(dataSize - 1)) * graphWidth;
-            float y2 = height - padding - ((data[i + 1] - minVal) / range) * graphHeight;
-            
-            g.drawLine(x1, y1, x2, y2, 2.0f);
-        }
+        // Y-axis label area width
+        int yAxisLabelWidth = 40;
+        int topPadding = 10;
+        int bottomPadding = 10;
         
-        // Draw points
-        g.setColour(juce::Colours::yellow);
-        for (int i = 0; i < dataSize; ++i)
-        {
-            float x = padding + (i / (float)(dataSize - 1)) * graphWidth;
-            float y = height - padding - ((data[i] - minVal) / range) * graphHeight;
-            g.fillEllipse(x - 3, y - 3, 6, 6);
-        }
+        float graphLeft = yAxisLabelWidth;
+        float graphRight = width;
+        float graphTop = topPadding;
+        float graphBottom = height - bottomPadding;
         
-        // Draw axes
+        float graphWidth = graphRight - graphLeft;
+        float graphHeight = graphBottom - graphTop;
+        
+        // Draw Y-axis
         g.setColour(juce::Colours::white);
-        g.drawLine(padding, height - padding, width - padding, height - padding, 1.0f); // X-axis
-        g.drawLine(padding, padding, padding, height - padding, 1.0f); // Y-axis
+        g.drawLine(graphLeft, graphTop, graphLeft, graphBottom, 1.0f);
+        
+        // Draw Y-axis scale labels (5 scale points)
+        g.setColour(juce::Colours::lightgrey);
+        g.setFont(juce::Font(10.0f));
+        
+        for (int i = 0; i <= 4; ++i)
+        {
+            float normalizedPos = i / 4.0f;
+            float yPos = graphBottom - (normalizedPos * graphHeight);
+            float value = minVal + (normalizedPos * range);
+            
+            // Draw tick marks
+            g.setColour(juce::Colours::white);
+            g.drawLine(graphLeft - 4, yPos, graphLeft, yPos, 1.0f);
+            
+            // Draw scale labels
+            g.setColour(juce::Colours::lightgrey);
+            juce::String labelText = juce::String(value, 2);
+            g.drawText(labelText, 
+                      0, (int)yPos - 7, yAxisLabelWidth - 4, 14,
+                      juce::Justification::right, false);
+        }
+        
+        // Draw vertical bars
+        if (dataSize > 0)
+        {
+            float barWidth = graphWidth / dataSize;
+            float barPadding = barWidth * 0.1f; // 10% padding on each side
+            float actualBarWidth = barWidth - (2 * barPadding);
+            
+            g.setColour(juce::Colours::green);
+            
+            for (int i = 0; i < dataSize; ++i)
+            {
+                float normalizedValue = (data[i] - minVal) / range;
+                float barHeight = normalizedValue * graphHeight;
+                
+                float barX = graphLeft + (i * barWidth) + barPadding;
+                float barY = graphBottom - barHeight;
+                
+                g.fillRect(barX, barY, actualBarWidth, barHeight);
+            }
+        }
     }
     
 private:
     const float* data;
     int dataSize;
+    
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(GraphComponent)
 };
