@@ -58,18 +58,6 @@ public:
         titleLabel.setColour (juce::Label::textColourId, juce::Colours::lightgreen);
         titleLabel.setJustificationType (juce::Justification::centred);
 
-        // addAndMakeVisible (inputLabel);
-        // inputLabel.setText ("Date:", juce::dontSendNotification);
-        // inputLabel.attachToComponent (&inputText, true);
-        // inputLabel.setColour (juce::Label::textColourId, juce::Colours::orange);
-        // inputLabel.setJustificationType (juce::Justification::right);
-
-        // addAndMakeVisible (statusLabel);
-        // statusLabel.setText ("Status:", juce::dontSendNotification);
-        // statusLabel.attachToComponent (&statusText, true);
-        // statusLabel.setColour (juce::Label::textColourId, juce::Colours::orange);
-        // statusLabel.setJustificationType (juce::Justification::right);
-
         addAndMakeVisible (statusText);
         statusText.setColour (juce::Label::backgroundColourId, juce::Colours::black);
         inputText.setJustificationType (juce::Justification::centred);
@@ -80,6 +68,12 @@ public:
         inputText.setColour (juce::Label::backgroundColourId, juce::Colours::darkblue);
         inputText.onTextChange = [this] { statusText.setText (inputText.getText().toUpperCase(), juce::dontSendNotification); };
         inputText.setJustificationType (juce::Justification::centred);
+
+        addAndMakeVisible(graphComponent);
+        
+        // Example data - replace with your actual data
+        exampleData = { 0.1f, 0.3f, 0.25f, 0.5f, 0.7f, 0.6f, 0.8f, 0.4f, 0.9f, 0.2f };
+        graphComponent.setData(exampleData.data(), exampleData.size());
 
         setSize (320, 200);
     }
@@ -94,15 +88,24 @@ public:
         titleLabel   .setBounds (10,  10, getWidth() - 20,  30);
         inputText    .setBounds (110, 50, getWidth() - 220, 20);
         statusText.setBounds (110, 80, getWidth() - 220, 20);
+
+        // Graph takes up the remaining space below
+        graphComponent.setBounds(10, 120, getWidth() - 20, getHeight() - 130);
+    }
+    // Public method to update graph data
+    void updateGraphData(const std::vector<float>& newData)
+    {
+        exampleData = newData;
+        graphComponent.setData(exampleData.data(), exampleData.size());
     }
 
 private:
     //==============================================================================
     juce::Label titleLabel;
-    // juce::Label inputLabel;
     juce::Label inputText;
-    juce::Label statusLabel;
     juce::Label statusText;
+    GraphComponent graphComponent;
+    std::vector<float> exampleData;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)

@@ -8,6 +8,7 @@
 
 #include <JuceHeader.h>
 #include "DirtyMannerUI.h"
+#include "GraphComponent.h"
 
 class Application    : public juce::JUCEApplication
 {
