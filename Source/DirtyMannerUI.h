@@ -45,6 +45,8 @@
 
 #pragma once
 
+#include "GraphComponent.h"
+
 //==============================================================================
 class MainContentComponent   : public juce::Component
 {
