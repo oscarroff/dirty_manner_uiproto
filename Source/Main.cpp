@@ -7,7 +7,7 @@
 */
 
 #include <JuceHeader.h>
-#include "LabelTutorial.h"
+#include "DirtyMannerUI.h"
 
 class Application    : public juce::JUCEApplication
 {

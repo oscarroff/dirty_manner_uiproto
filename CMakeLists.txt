@@ -18,12 +18,6 @@ target_sources(dirty_manner_ui PRIVATE
     Source/DirtyMannerUI.h
 )
 
-# Include directories
-target_include_directories(dirty_manner_ui PRIVATE
-    JUCE/extras/Projucer/JuceLibraryCode/
-    JUCE/extras/Build/juce_build_tools/
-)
-
 # Link JUCE modules (from PIP metadata)
 target_link_libraries(dirty_manner_ui PRIVATE
     juce::juce_core
