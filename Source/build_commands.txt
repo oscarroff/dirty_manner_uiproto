@@ -1,0 +1,4 @@
+# In main parent directory
+# First (builds JUCE dependencies): cmake -B build -S .
+# Then (builds executables and plugins): cmake --build build
+# To launch: open build/dirty_manner_ui_artefacts/dirty_manner_ui.app

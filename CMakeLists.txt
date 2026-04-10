@@ -18,6 +18,9 @@ juce_generate_juce_header(dirty_manner_ui)
 # Add your source files
 target_sources(dirty_manner_ui PRIVATE
     Source/Main.cpp
+    Source/PluginEditor.cpp
+    Source/WavetableFetcher.cpp
+    # Source/HeaderLoader.cpp
 )
 
 # Link JUCE modules (from PIP metadata)
@@ -27,6 +30,8 @@ target_link_libraries(dirty_manner_ui PRIVATE
     juce::juce_events
     juce::juce_graphics
     juce::juce_gui_basics
+    curlpp
+    curl
 )
 
 # Recommended compile definitions

@@ -7,7 +7,7 @@
 */
 
 #include <JuceHeader.h>
-#include "DirtyMannerUI.h"
+#include "PluginEditor.h"
 #include "GraphComponent.h"
 
 class Application    : public juce::JUCEApplication

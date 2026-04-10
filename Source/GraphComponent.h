@@ -25,12 +25,13 @@ public:
             return;
         
         // Find min and max values for scaling
-        float maxVal = data[0];
-        for (int i = 0; i < dataSize; ++i)
-        {
-            maxVal = juce::jmax(maxVal, data[i]);
-        }
+        // float maxVal = data[0];
+        // for (int i = 0; i < dataSize; ++i)
+        // {
+        //     maxVal = juce::jmax(maxVal, data[i]);
+        // }
         float minVal = 0.0f;
+        float maxVal = 10.0f;
         
         // Prevent division by zero
         if (maxVal == minVal)
